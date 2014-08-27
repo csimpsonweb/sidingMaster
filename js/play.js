@@ -4,7 +4,8 @@ var playState = {
 
 //TODO: REMOVE THIS : section each out into a function , be clear about your layout and think it through properly first
 
-	create: function() { 
+	create: function() {
+
 		this.background = game.add.sprite(0, 0, 'background');
 		this.background.anchor.x = 0;
 		this.background.anchor.y = 0;
@@ -22,10 +23,18 @@ var playState = {
 
 	moveTrain: function(){
 
+		if(game.global.train1Status === 'moving'){
+			this.trainOne.x = this.trainOne.x+game.global.train1XSpeed;
+			this.trainOne.y = this.trainOne.y+game.global.train1YSpeed;
+		}
+		this.checkLocation(this.trainOne);
 	},
 
 	trains: function() {
 
+		this.trainOne = game.add.sprite(20, 1020, 'trainOne');
+		this.trainOne.anchor.x=0.5;
+		this.trainOne.anchor.y=0.5;
 	},
 
 	hitboxes: function(){
@@ -64,5 +73,42 @@ var playState = {
 
 	},
 
+	checkLocation: function(train) {
+
+		if(train.x < 2048){
+			game.global.train1XSpeed=2; //
+			game.global.train1YSpeed=0;
+
+		}
+
+	},
 
 };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

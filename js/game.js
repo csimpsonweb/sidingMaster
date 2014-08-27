@@ -5,7 +5,14 @@ var game = new Phaser.Game(2048, 2048, Phaser.AUTO, 'gameDiv');
 game.global = {
 	sound: true,
 	score: 0,
-	// Add other global variables
+
+	// Array for holding trains
+
+	train1Status: 'moving',
+	train1XSpeed: 4,
+	train1YSpeed: 0,
+
+	
 };
 
 // Define states
