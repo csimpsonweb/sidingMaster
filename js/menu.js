@@ -12,10 +12,7 @@ var menuState = {
 		playLabel.events.onInputDown.add(this.start, this);
 	},
 
-	toggleSound: function() {
-		game.global.sound = ! game.global.sound;
-		this.muteButton.frame = game.global.sound ? 0 : 1;		
-	},
+
 
 	start: function() {
 		game.state.start('play');	

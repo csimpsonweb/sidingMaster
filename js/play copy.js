@@ -9,41 +9,35 @@ var playState = {
 		this.background.anchor.y = 0;
 
 		this.hitboxes();
-
+		this.trains();
 
 	},
 
 	update: function() {
 
-		this.createTrain();
 		this.moveTrain();
 
-	},
+		console.log(this.trainOne.x);
+		console.log(this.trainOne.y);
 
-	createTrain: function(){
-
-		var check=(Math.random()*100000);
-
-			if(check<800){
-
-			// add trains to the array
-			game.global.train = game.add.sprite(-20, 1000, 'trainOne');
-			game.global.trainCount++;
-
-			//console.log(game.global.trainCount);
-			//console.log(game.global.direction1);
-			//console.log(game.global.train.x);
-
-		}
+		//console.log(game.global.direction1);
 
 	},
 
-	moveTrain: function() {
+	moveTrain: function(){
+
 		if(game.global.train1Status === 'moving'){
-			game.global.train.x = game.global.train.x+game.global.train1XSpeed;
-			game.global.train.y = game.global.train.y+game.global.train1YSpeed;
+			this.trainOne.x = this.trainOne.x+game.global.train1XSpeed;
+			this.trainOne.y = this.trainOne.y+game.global.train1YSpeed;
 		}
 		this.checkLocation(this.trainOne);
+	},
+
+	trains: function() {
+
+		this.trainOne = game.add.sprite(20, 1020, 'trainOne');
+		this.trainOne.anchor.x=0.5;
+		this.trainOne.anchor.y=0.5;
 	},
 
 	hitboxes: function(){
@@ -67,39 +61,79 @@ var playState = {
 
 	hitboxOneListener: function(){
 		console.log('hitboxOne pressed');
-		//game.global.direction1 = 'turn';
+		game.global.direction1 = 'turn';
 
 		//make the train turn left when it passes over and direct it into the siding
 	},
-
 	hitboxTwoListener: function(){
 		console.log('hitboxTwo pressed');
-		//game.global.direction1 = 'turn';
 
 	},
-
 	hitboxThreeListener: function(){
 		console.log('hitboxThree pressed');
-		//game.global.direction1 = 'turn';
 
 	},
-
 	hitboxFourListener: function(){
 		console.log('hitboxFour pressed');
-		//game.global.direction1 = 'turn';
 
 	},
+
 	checkLocation: function(train) {
 
 		// checks for train1 passing over junction1
-		if(game.global.train.x < 2230){
+		if(train.x > 220 && train.x < 230){
+		  if(train.y > 1015 && train.y < 1025 && game.global.direction1 === 'turn'){
 
-	  		game.global.train1XSpeed=4;
-			game.global.train1YSpeed=0;
+	  		game.global.train1XSpeed=1;
+			game.global.train1YSpeed=-1;
+			train.angle=-45;
+
+			}
 		}
-
+		/*
+		// checks train1 passing over the curve
+		if(train.x > 420 && train.x < 445){
+			if(train.y > 805 && train.y < 815){
+				game.global.train1XSpeed=1;
+				game.global.train1YSpeed=0;
+				train.angle=0;
+			}
+		}
+		*/
+		/*
+		// stop the train in the siding - set it home. globally
+		if(train.x > 1385 && train.x < 1390){
+			if(train.y > 810 && train.y < 820){
+				game.global.train1XSpeed=0;
+				game.global.train1YSpeed=0;
+				game.global.train1Home = true;
+				
+			}
+		}
+		*/
+		/*
+		if(train.x > 2148 && train.y === 1020){
+			game.global.train1XSpeed=0;
+			game.global.train1YSpeed=0;
+			train.destroy();
+		}
+		*/
 	},
+
 };
+
+
+
+/*
+
+	-======================== COMMENTS ========================-
+
+	1: the train somehow needs to be destroyed when it goes offscreen 
+	2:
+	3:
+	4:
+
+*/
 
 
 
