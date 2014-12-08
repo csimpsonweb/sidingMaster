@@ -19,7 +19,10 @@ var loadState = {
 		game.load.image('hitBox', 'assets/hitBox.png', 146, 142);
 		game.load.image('hitBoxRED', 'assets/hitBoxRED.png', 146, 142);
 
-		game.load.image('trainOne', 'assets/left_trainOne.png',151, 51);
+		game.load.image('trainOne', 'assets/green_Train.png',151, 57);
+		game.load.image('trainTwo', 'assets/blue_Train.png',151, 57);
+		game.load.image('trainThree', 'assets/red_Train.png',151, 57);
+		game.load.image('trainFour', 'assets/purple_Train.png',151, 57);
 	},
 
 	create: function() { 

@@ -18,32 +18,66 @@ var playState = {
 		this.createTrain();
 		this.moveTrain();
 
+		//console.log(game.global.trainXSpeed.length);
+		//console.log(game.global.train);
+		//console.log(game.global.train);
+		//console.log(game.global.startSpeedY);
+
 	},
 
 	createTrain: function(){
 
-		var check=(Math.random()*100000);
+		var check=(Math.random()*90000);
 
 			if(check<800){
 
+				//Spawn train type
+				tcolour='trainOne';
+
+				if(check < 600){
+					tcolour='trainTwo';
+				}
+				if(check < 400){
+					tcolour='trainThree';
+				}
+				if(check < 200){
+					tcolour='trainFour';
+				}
+
 			// add trains to the array
-			game.global.train = game.add.sprite(-20, 1000, 'trainOne');
+			var newTrain = game.add.sprite(-20, 1000, tcolour);
+			game.global.train[game.global.train.length] = newTrain;
+			game.global.trainXSpeed[game.global.trainXSpeed.length]=game.global.startSpeedX;
+			game.global.trainYSpeed[game.global.trainYSpeed.length]=game.global.startSpeedY;
+			game.global.trainStatus[game.global.trainStatus.length]=game.global.startStatus;
+			game.global.trainColour[game.global.trainColour.length]=tcolour;
 			game.global.trainCount++;
 
 			//console.log(game.global.trainCount);
 			//console.log(game.global.direction1);
 			//console.log(game.global.train.x);
-
+			//console.log(game.global.train);
 		}
+
 
 	},
 
 	moveTrain: function() {
-		if(game.global.train1Status === 'moving'){
+
+		for(i=0;i<game.global.train.length;i++){
+			game.global.train[i].x = game.global.train[i].x+game.global.trainXSpeed[i];
+			game.global.train[i].y = game.global.train[i].y+game.global.trainYSpeed[i];
+			this.checkLocation(game.global.train[i], i);
+			//console.log(game.global.train[i]);
+			console.log(i);
+		}
+
+
+		/*if(game.global.train1Status === 'moving'){
 			game.global.train.x = game.global.train.x+game.global.train1XSpeed;
 			game.global.train.y = game.global.train.y+game.global.train1YSpeed;
 		}
-		this.checkLocation(this.trainOne);
+		this.checkLocation(this.trainOne);*/
 	},
 
 	hitboxes: function(){
@@ -68,7 +102,10 @@ var playState = {
 	hitboxOneListener: function(){
 		console.log('hitboxOne pressed');
 		//game.global.direction1 = 'turn';
-
+		if(game.global.hb1train!=null){
+			game.global.train[game.global.hb1train].angle=-45;
+			game.global.trainYSpeed[game.global.hb1train]=-2;
+		}
 		//make the train turn left when it passes over and direct it into the siding
 	},
 
@@ -89,13 +126,15 @@ var playState = {
 		//game.global.direction1 = 'turn';
 
 	},
-	checkLocation: function(train) {
+	checkLocation: function(train, arrNum) {
 
-		// checks for train1 passing over junction1
-		if(game.global.train.x < 2230){
-
-	  		game.global.train1XSpeed=4;
-			game.global.train1YSpeed=0;
+		//Check train location
+		if((train.x > 200) && (train.x < 400)){
+			game.global.hb1train = arrNum;
+		} else if((train.x >400) && (train.x < 800)){
+			game.global.hb1train = null;
+		} else if(((train.x >800) && (train.x < 1000)) && (train.y<800)){
+			game.global.hb2train = arrNum;
 		}
 
 	},
