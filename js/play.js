@@ -69,13 +69,14 @@ var playState = {
 
 			//Check to see the new train pos
 			if(game.global.trainStates[i]==='movingup'){
-				console.log('moveup train'+game.global.trainStates[i]);
+				//console.log('moveup train'+game.global.trainStates[i]);
 				if(game.global.trainColour[i]==='trainOne'){
 					if(game.global.train[i].y < 780){
 						game.global.trainYSpeed[i]=0;
 						game.global.train[i].angle=0;
 					}
 				}
+
 				if(game.global.trainColour==='trainTwo'){
 
 				}
@@ -83,10 +84,21 @@ var playState = {
 			}
 
 			if(game.global.trainStates[i]==='movingup2'){
+				//console.log('moveup train'+game.global.trainStates[i]);
 				if(game.global.trainColour[i]==='trainOne'){
-					if(game.global.train[i].y < 400){
-						game.global.trainYSpeed[i]=0;
+					if(game.global.train[i].y < 780){
+						game.global.trainYSpeed[i]=-2;
+						game.global.train[i].angle=-45;
+					}
+					if(game.global.train[i].y < 580 && game.global.train[i].x > 800){
 						game.global.train[i].angle=0;
+						game.global.trainXSpeed[i]=1.5;
+						game.global.trainYSpeed[i]=2;	
+					}
+					if(game.global.train[i].y < 580 && game.global.train[i].x > 1150){
+						game.global.train[i].angle=0;
+						game.global.trainXSpeed[i]=0;
+						game.global.trainYSpeed[i]=0;
 					}
 				}
 
@@ -136,48 +148,28 @@ var playState = {
 		this.hitboxFour.events.onInputDown.add(this.hitboxFourListener, this);
 	},
 
-
-	/*manageTrains: function(){
-
-		for(i=0;i<game.global.train.length;i++){
-
-			if(game.global.trainStates[i] === 'movingup'){
-				game.global.train[i].angle=-45;
-				game.global.trainYSpeed[i]=-2;
-				console.log('running');
-			}
-
-		}
-
-	},*/
-
 	hitboxOneListener: function(){
 		console.log('hitboxOne pressed');
 		//if(game.global.hb1train!=null)
 		if(game.global.trainColour[game.global.hb1train] === 'trainOne'){
-			console.log('conditions met');
+			//console.log('conditions met');
 			game.global.trainStates[game.global.hb1train] = 'movingup';
-			console.log(game.global.trainStates[game.global.hb1train]);
+			//console.log(game.global.trainStates[game.global.hb1train]);
 			//console.log(tcolour);
 			game.global.train[game.global.hb1train].angle=-45;
 			game.global.trainYSpeed[game.global.hb1train]=-2;		
-/*
-			//if() the train goes above a certain height - stop
-			if(game.global.train[game.global.hb1train].y > 800 && game.global.train[game.global.hb1train].y < 850){
-				console.log('stopped');
-			}
-			//then turn
-			//then carry on to the designated color area
-			//then stop
-			//log the train is home ++
-*/
 		}
 	},
 
 	hitboxTwoListener: function(){
 		console.log('hitboxTwo pressed');
-		//game.global.direction1 = 'turn';
-
+		if(game.global.trainColour[game.global.hb2train] === 'trainOne'){
+			game.global.trainStates[game.global.hb2train] = 'movingup2';
+			//console.log(game.global.trainStates[game.global.hb1train]);
+			game.global.train[game.global.hb2train].angle=-0;
+			game.global.trainYSpeed[game.global.hb2train]=0;
+			console.log('conditions met');
+		}
 	},
 
 	hitboxThreeListener: function(){
