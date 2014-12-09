@@ -9,15 +9,12 @@ var playState = {
 		this.background.anchor.y = 0;
 
 		this.hitboxes();
-
-
 	},
 
 	update: function() {
-
 		this.createTrain();
 		this.moveTrain();
-
+		//this.manageTrains();
 		//console.log(game.global.trainXSpeed.length);
 		//console.log(game.global.train);
 		//console.log(game.global.train);
@@ -49,7 +46,7 @@ var playState = {
 			game.global.train[game.global.train.length] = newTrain;
 			game.global.trainXSpeed[game.global.trainXSpeed.length]=game.global.startSpeedX;
 			game.global.trainYSpeed[game.global.trainYSpeed.length]=game.global.startSpeedY;
-			game.global.trainStatus[game.global.trainStatus.length]=game.global.startStatus;
+			game.global.trainStates[game.global.trainStates.length]=game.global.startStatus;
 			game.global.trainColour[game.global.trainColour.length]=tcolour;
 			game.global.trainCount++;
 
@@ -58,26 +55,66 @@ var playState = {
 			//console.log(game.global.train.x);
 			//console.log(game.global.train);
 		}
-
-
 	},
 
 	moveTrain: function() {
 
 		for(i=0;i<game.global.train.length;i++){
+
+
+			//Move the train
 			game.global.train[i].x = game.global.train[i].x+game.global.trainXSpeed[i];
 			game.global.train[i].y = game.global.train[i].y+game.global.trainYSpeed[i];
 			this.checkLocation(game.global.train[i], i);
+
+			//Check to see the new train pos
+			if(game.global.trainStates[i]==='movingup'){
+				console.log('moveup train'+game.global.trainStates[i]);
+				if(game.global.trainColour[i]==='trainOne'){
+					if(game.global.train[i].y < 780){
+						game.global.trainYSpeed[i]=0;
+						game.global.train[i].angle=0;
+					}
+				}
+				if(game.global.trainColour==='trainTwo'){
+
+				}
+				
+			}
+
+			if(game.global.trainStates[i]==='movingup2'){
+				if(game.global.trainColour[i]==='trainOne'){
+					if(game.global.train[i].y < 400){
+						game.global.trainYSpeed[i]=0;
+						game.global.train[i].angle=0;
+					}
+				}
+
+			}
+
+			if(game.global.trainStates[i]==='movingdown'){
+				if(game.global.trainColour[i]==='trainThree'){
+					if(game.global.train[i].y > 1300){
+						game.global.trainYSpeed[i]=0;
+						game.global.train[i].angle=0;
+					}
+				}
+
+			}
+
+			if(game.global.trainStates[i]==='movingup3'){
+				if(game.global.trainColour[i]==='trainFour'){
+					if(game.global.train[i].y > 1300){
+						game.global.trainYSpeed[i]=0;
+						game.global.train[i].angle=0;
+					}
+				}
+
+			}
+
 			//console.log(game.global.train[i]);
-			console.log(i);
+			//console.log(tcolour);
 		}
-
-
-		/*if(game.global.train1Status === 'moving'){
-			game.global.train.x = game.global.train.x+game.global.train1XSpeed;
-			game.global.train.y = game.global.train.y+game.global.train1YSpeed;
-		}
-		this.checkLocation(this.trainOne);*/
 	},
 
 	hitboxes: function(){
@@ -99,14 +136,42 @@ var playState = {
 		this.hitboxFour.events.onInputDown.add(this.hitboxFourListener, this);
 	},
 
+
+	/*manageTrains: function(){
+
+		for(i=0;i<game.global.train.length;i++){
+
+			if(game.global.trainStates[i] === 'movingup'){
+				game.global.train[i].angle=-45;
+				game.global.trainYSpeed[i]=-2;
+				console.log('running');
+			}
+
+		}
+
+	},*/
+
 	hitboxOneListener: function(){
 		console.log('hitboxOne pressed');
-		//game.global.direction1 = 'turn';
-		if(game.global.hb1train!=null){
+		//if(game.global.hb1train!=null)
+		if(game.global.trainColour[game.global.hb1train] === 'trainOne'){
+			console.log('conditions met');
+			game.global.trainStates[game.global.hb1train] = 'movingup';
+			console.log(game.global.trainStates[game.global.hb1train]);
+			//console.log(tcolour);
 			game.global.train[game.global.hb1train].angle=-45;
-			game.global.trainYSpeed[game.global.hb1train]=-2;
+			game.global.trainYSpeed[game.global.hb1train]=-2;		
+/*
+			//if() the train goes above a certain height - stop
+			if(game.global.train[game.global.hb1train].y > 800 && game.global.train[game.global.hb1train].y < 850){
+				console.log('stopped');
+			}
+			//then turn
+			//then carry on to the designated color area
+			//then stop
+			//log the train is home ++
+*/
 		}
-		//make the train turn left when it passes over and direct it into the siding
 	},
 
 	hitboxTwoListener: function(){

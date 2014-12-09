@@ -13,18 +13,12 @@ game.global = {
 	trainStates: [],
 
 	trainColour: [],
-	trainStatus: [],
 	trainXSpeed: [],
 	trainYSpeed: [],
 
 	startSpeedX: 2,
 	startSpeedY: 0,
 	startStatus: 'moving',
-
-	direction1: 'straight',
-	direction2: 'straight',
-	direction3: 'straight',
-	direction4: 'straight',
 
 	train1Home: false,
 	train2Home: false,
