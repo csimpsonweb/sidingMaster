@@ -75,10 +75,32 @@ var playState = {
 						game.global.trainYSpeed[i]=0;
 						game.global.train[i].angle=0;
 					}
+					if(game.global.train[i].x > 600){
+						//console.log('warning turn your train');
+
+					}
+					if(game.global.train[i].x > 1300){
+						game.global.trainYSpeed[i]=0;
+						game.global.trainXSpeed[i]=0;
+						game.global.train[i].angle=0;
+						//console.log('green home in wrong zone');
+						//kill green train
+						//minus 1 from train list
+
+					}
 				}
 
-				if(game.global.trainColour==='trainTwo'){
+				if(game.global.trainColour[i]==='trainTwo'){
+					if(game.global.train[i].y < 780 ){
+						game.global.trainYSpeed[i]=0;
+						game.global.train[i].angle=0;
+					}
+					if(game.global.train[i].x > 1300){
+						game.global.trainYSpeed[i]=0;
+						game.global.trainXSpeed[i]=0;
+						game.global.train[i].angle=0;
 
+					}
 				}
 				
 			}
@@ -106,12 +128,24 @@ var playState = {
 
 			if(game.global.trainStates[i]==='movingdown'){
 				if(game.global.trainColour[i]==='trainThree'){
-					if(game.global.train[i].y > 1300){
+					if((game.global.train[i].x > 1100) && (game.global.train[i].x < 1400)){
+						game.global.trainYSpeed[i]=2;
+						game.global.trainXSpeed[i]=2;
+						game.global.train[i].angle=45;
+					}
+					if((game.global.train[i].x > 1300) && (game.global.train[i].y < 1350)){
+						//console.log('sjbcskjbcksdbcjsdbc');
+						game.global.train[i].angle=0;
+						game.global.trainXSpeed[i]=2;
 						game.global.trainYSpeed[i]=0;
+					}
+					if(game.global.train[i].x > 1550){
+						game.global.trainYSpeed[i]=0;
+						game.global.trainXSpeed[i]=0;
 						game.global.train[i].angle=0;
 					}
-				}
 
+				}
 			}
 
 			if(game.global.trainStates[i]==='movingup3'){
@@ -159,6 +193,15 @@ var playState = {
 			game.global.train[game.global.hb1train].angle=-45;
 			game.global.trainYSpeed[game.global.hb1train]=-2;		
 		}
+
+		if(game.global.trainColour[game.global.hb1train]==='trainTwo'){
+			game.global.trainStates[game.global.hb1train] = 'movingup';
+			//console.log(game.global.trainStates[game.global.hb1train]);
+			//console.log(tcolour);
+			game.global.train[game.global.hb1train].angle=-45;
+			game.global.trainYSpeed[game.global.hb1train]=-2;
+		}
+
 	},
 
 	hitboxTwoListener: function(){
@@ -168,14 +211,21 @@ var playState = {
 			//console.log(game.global.trainStates[game.global.hb1train]);
 			game.global.train[game.global.hb2train].angle=-0;
 			game.global.trainYSpeed[game.global.hb2train]=0;
-			console.log('conditions met');
+			game.global.trainXSpeed[game.global.hb2train]=2;
+			//console.log('conditions met');
 		}
 	},
 
 	hitboxThreeListener: function(){
 		console.log('hitboxThree pressed');
-		//game.global.direction1 = 'turn';
-
+		if(game.global.trainColour[game.global.hb3train] === 'trainThree'){
+			game.global.trainStates[game.global.hb3train] = 'movingdown';
+			//console.log(game.global.trainStates[game.global.hb1train]);
+			//game.global.train[game.global.hb3train].angle=-0;
+			//game.global.trainYSpeed[game.global.hb3train]=0;
+			//game.global.trainXSpeed[game.global.hb3train]=2;
+			console.log('conditions met');
+		}
 	},
 
 	hitboxFourListener: function(){
@@ -192,8 +242,9 @@ var playState = {
 			game.global.hb1train = null;
 		} else if(((train.x >800) && (train.x < 1000)) && (train.y<800)){
 			game.global.hb2train = arrNum;
+		} else if(((train.x >800) && (train.x < 1500)) && (train.y>800)){
+			game.global.hb3train = arrNum;
 		}
-
 	},
 };
 
