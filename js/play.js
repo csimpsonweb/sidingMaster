@@ -16,7 +16,7 @@ var playState = {
 		this.moveTrain();
 		//this.manageTrains();
 		//console.log(game.global.trainXSpeed.length);
-		//console.log(game.global.train);
+		//console.log(game.global.hb4train);
 		//console.log(game.global.train);
 		//console.log(game.global.startSpeedY);
 
@@ -29,7 +29,8 @@ var playState = {
 			if(check<800){
 
 				//Spawn train type
-				tcolour='trainOne';
+				//tcolour='trainOne';
+				tcolour='';
 
 				if(check < 600){
 					tcolour='trainTwo';
@@ -150,8 +151,19 @@ var playState = {
 
 			if(game.global.trainStates[i]==='movingup3'){
 				if(game.global.trainColour[i]==='trainFour'){
-					if(game.global.train[i].y > 1300){
+					if(game.global.train[i].x > 1000){
+						game.global.trainYSpeed[i]=-2;
+						game.global.train[i].angle=-45;
+					}
+					if(game.global.train[i].y < 750){
+						//console.log('sjbcskjbcksdbcjsdbc');
+						game.global.train[i].angle=0;
+						game.global.trainXSpeed[i]=0;
 						game.global.trainYSpeed[i]=0;
+					}
+					if(game.global.train[i].x > 1850){
+						game.global.trainYSpeed[i]=0;
+						game.global.trainXSpeed[i]=0;
 						game.global.train[i].angle=0;
 					}
 				}
@@ -231,7 +243,10 @@ var playState = {
 	hitboxFourListener: function(){
 		console.log('hitboxFour pressed');
 		//game.global.direction1 = 'turn';
-
+		if(game.global.trainColour[game.global.hb4train] === 'trainFour'){
+			game.global.trainStates[game.global.hb4train] = 'movingup3';
+			console.log('conditions met for train 4');
+		}
 	},
 	checkLocation: function(train, arrNum) {
 
@@ -244,6 +259,8 @@ var playState = {
 			game.global.hb2train = arrNum;
 		} else if(((train.x >800) && (train.x < 1500)) && (train.y>800)){
 			game.global.hb3train = arrNum;
+		} else if((train.x >1200) && (train.x < 1550)){
+			game.global.hb4train = arrNum;
 		}
 	},
 };
